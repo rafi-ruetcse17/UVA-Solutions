@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+using namespace std;
+vector<int>graph[1000];
+bool vis[1000];
+void dfs(int src)
+{
+    vis[src]=true;
+    for(int i=0;i<graph[src].size();i++)
+    {
+        if(vis[graph[src][i]]==false)
+            {
+                //vis[graph[src][i]]=true;
+                dfs(graph[src][i]);
+
+            }
+    }
+}
+int main()
+{
+    int t;
+    scanf("%d\n\n",&t);
+    while(t--)
+    {
+        string s;
+
+        getline(cin,s);
+        int n;
+        n=s[0]-65;
+        //cout << n << endl;
+        while(getline(cin,s))
+        {
+
+            if(s.size()==0)
+                break;
+            int u,v;
+            u=s[0]-65;
+            v=s[1]-65;
+            graph[u].push_back(v);
+            graph[v].push_back(u);
+        }
+        int cnt=0;
+        for(int i=0;i<=n;i++)
+        {
+            if(vis[i]==0)
+            {
+                cnt++;
+                dfs(i);
+            }
+        }
+        cout << cnt << "\n";
+        if(t>0)
+            printf("\n");
+        for(int i=0;i<1000;i++)
+        {
+            graph[i].clear();
+            vis[i]=false;
+        }
+    }
+}
